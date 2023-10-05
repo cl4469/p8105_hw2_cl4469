@@ -69,11 +69,6 @@ str(data_538)
 
 ## Problem 2
 
-```{r}
-library(tidyverse)
-library(readxl)
-```
-
 #### Reading and cleaning the Mr. Trash Wheel sheet:
 ```{r}
 trash_path = "data2/202309 Trash Wheel Collection Data.xlsx"
@@ -146,7 +141,7 @@ Total_df =
   janitor::clean_names()
 ```
 
-#### calculate the total weight of trash collected by Professor Trash Wheel, and the total number of cigarette butts collected by Gwynnda in July of 2021
+#### Calculate the total weight of trash collected by Professor Trash Wheel, and the total number of cigarette butts collected by Gwynnda in July of 2021
 ```{r}
 sum(Total_df %>% filter(name == "Prof") %>% select(weight_tons))
 
@@ -155,8 +150,7 @@ sum(Total_df %>% filter(name=="Gwy",year==2021, month=="July") %>% select(cigare
 
 For the resulting dataset `Total_df`, it has `r nrow(Total_df)` observations and `r ncol(Total_df)`
 variables and tells us about how much trash in each of their dumpsters were collected by Mr. Trash
-Wheel, professor Trash Wheel, and Gwynnda Trash Wheel between the year of
-`r range(Total_df$year[1])` to `r range(Total_df$year[2])`. In detail, the dataset have many key 
+Wheel, professor Trash Wheel, and Gwynnda Trash Wheel. In detail, the dataset have many key 
 variables, such as`weight_tons`,`volume_cubic_yards`,`homes_powered`. The variable `weight_tons` 
 measures how much trash were collected, such as `plastic_bottles`,`polystyrene`,`cigarette_butts`.
 And the total weight of trash collected by Professor Trash Wheel is 
@@ -201,7 +195,7 @@ After this process, there are `r nrow(baseline_df)` observations left.
 #The ratio
   nrow(filter(baseline_df, sex == "Female" & apoe4 == "Carrier"))/nrow (filter(baseline_df, sex == "Female"))
 ```
-For the original dataset `baseline_df`, there are a total of `r nrow(baseline_df)` participants recruited. Among this participants, `r nrow(baseline_clean)` participants develop MCI.The average age of the patients was `r mean(baseline_df$current_age)` years old. The dataset contained `r nrow (filter(baseline_df, sex == "Female"))` females. Among these women, `nrow(filter(baseline_df, sex == "Female" & apoe4 == "Carrier"))` were carriers. Thus, the proportion of women in the study are APOE4 carriers is `r nrow(filter(baseline_df, sex == "Female" & apoe4 == "Carrier"))/nrow (filter(baseline_df, sex == "Female"))`
+For the original dataset `baseline_df`, there are a total of `r nrow(baseline_df)` participants recruited. Among this participants, `r nrow(baseline_clean)` participants develop MCI.The average age of the patients was `r mean(baseline_df$current_age)` years old. The dataset contained `r nrow (filter(baseline_df, sex == "Female"))` females. Among these women, `r nrow(filter(baseline_df, sex == "Female" & apoe4 == "Carrier"))` were carriers. Thus, the proportion of women in the study are APOE4 carriers is `r nrow(filter(baseline_df, sex == "Female" & apoe4 == "Carrier"))/nrow (filter(baseline_df, sex == "Female"))`
 
 ```{r}
 amyloid_df <- read_csv("data3/mci_amyloid.csv",skip=1) |>
@@ -233,6 +227,6 @@ write.csv(Combine_df, file = "data3/Combine_df.csv")
 ```
 Then, I combined the baseline_df and amyloid_df datasets so that only participants who appear in both datasets are retained. The `Combine_df` dataset contains `r nrow(Combine_df)` rows and `r ncol(Combine_df)` columns.The `Combine_df` has `r nrow (filter(Combine_df, sex == "Female"))` females and `r nrow (filter(Combine_df, sex == "Male"))` males. Among them, There are `r nrow(filter(Combine_df, apoe4 == "Carrier"))` carriers.The average age of the patients is `r mean(Combine_df$current_age)` years old.The average years of education of the patients is `r mean(Combine_df$education)` years. The average age of onset of MCI for the patients is `r mean(Combine_df$age_at_onset)` years.
 
-Moreover, there are `r `nrow(baseline)` patients who are in the `baseline_df` dataset and not in the `amyloid_df` dataset. There are `r nrow(amyloid)/5` patients who are in the `amyloid_df` dataset and not in the `baseline_df` dataset.
+Moreover, there are `r nrow(baseline)` patients who are in the `baseline_df` dataset and not in the `amyloid_df` dataset. There are `r nrow(amyloid)/5` patients who are in the `amyloid_df` dataset and not in the `baseline_df` dataset.
 
 In the end, I exported the dataset as a csv file.
