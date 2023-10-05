@@ -205,7 +205,7 @@ For the original dataset `baseline_df`, there are a total of `r nrow(baseline_df
 
 ```{r}
 amyloid_df <- read_csv("data3/mci_amyloid.csv",skip=1) |>
-  janitor::clean_names()|>
+  janitor::clean_names() |>
   rename(id=study_id,
          time_0=baseline) |>
   pivot_longer(
@@ -213,8 +213,12 @@ amyloid_df <- read_csv("data3/mci_amyloid.csv",skip=1) |>
     names_to = "years_since_baseline",
     values_to = "baseline")
 ```
-The `amyloid_df` dataset contains the data of `r nrow(amyloid_df)` patients and `r ncol(amyloid_df)`columns. First, I renamed the columns to be more descriptive of the variable by using `r rename(id = study_id, time_0=baseline)`. Second, because the `amyloid_df` dataset has longitudinally observed biomarker values. For this dataset, I have multiple columns `time_0`,`time_2`,`time_3`representing different variables, and I want to stack those columns into a single variable column`years_since_baseline`. Thus,I need to use `pivot_longer`function to tidy it.
-
+The `amyloid_df` dataset contains the data of `r nrow(amyloid_df)` patients and
+`r ncol(amyloid_df)`columns. First, I renamed the columns to be more descriptive of the
+variable. Second, because the `amyloid_df` dataset has longitudinally observed biomarker values. For this dataset, 
+I have multiple columns `time_0`,`time_2`,`time_3`representing different variables, 
+and I want to stack those columns into a single variable column`years_since_baseline`. 
+Thus,I need to use `pivot_longer`function to tidy it.
 ```{r}
 baseline=baseline_df |>
 anti_join(amyloid_df, by= "id")
@@ -224,7 +228,6 @@ amyloid=amyloid_df |>
 anti_join(baseline_df, by= "id")
 nrow(amyloid)/5
 
-baseline=baseline_df |> anti_join(amyloid_df, by= "id") nrow(baseline)
 Combine_df = inner_join(baseline_df, amyloid_df, by = "id")
 write.csv(Combine_df, file = "data3/Combine_df.csv")
 ```
